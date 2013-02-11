@@ -21,6 +21,4 @@ Right now it only recognizes a few services, the ones I use the most,
 but my goal is to read al available services and match against the string you enter with regex,
 so postgresql could become psql, mysql could be typed as mql and nginx as ngx.
 
-How cool is that?
-
 
