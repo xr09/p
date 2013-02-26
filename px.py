@@ -3,7 +3,7 @@
 #
 #  px.py
 #
-#  Copyright 2013 Manuel E. Gutierrez <xr09 at github, bitbucket, stackoverflow, reddit, twitter>
+#  Copyright 2013 Manuel E. Gutierrez <xr09 at github>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
