@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Manuel E. Gutierrez <xr09.github.com>
+# Copyright (C) <2013> <Manuel E. Gutierrez xr09>
 #
 #
 # Permission is hereby granted, free of charge, to any person obtaining
