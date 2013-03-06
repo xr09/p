@@ -24,11 +24,8 @@
 import sys
 import os
 
-#~ SERVICES = os.listdir('/etc/init.d/')
-
-
 SERVICES = ['lighttpd', 'memcached', 'postgresql', 'mysql',
-            'prosody', 'ssh', 'wicd', 'hostapd', 'udhcpd']
+            'prosody', 'ssh', 'wicd', 'hostapd', 'udhcpd', 'dnsmasq']
 
 def main():
     if len(sys.argv) >= 2:
