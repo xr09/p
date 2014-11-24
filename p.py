@@ -27,6 +27,7 @@
 import sys
 import os
 import re
+import argparse
 
 
 VERSION = '0.2'
@@ -35,25 +36,23 @@ VERSION = '0.2'
 # Just in case there is no /etc/p.conf
 DEFAULT_SERVICES = "memcached ssh postgresql mysql prosody wicd hostapd \
             udhcpd dnsmasq apache2 httpd nginx networking php5-fpm uwsgi gunicorn preload \
-            ferm libvirtd".split()
+            ferm libvirtd lighttpd".split()
 
 # read service groups form .p.conf
 SERVICE_GROUPS = {'web': 'nginx php5-fpm', 'db': 'postgresql memcached'}
 
 
-def detect_service(name_to_match):
+def detect_service(name_to_match, service_list=DEFAULT_SERVICES):
     """ Match input string against system services.
-    Pick the best match.
+
+    Search the specified string anywhere in the name
+    of a service.
 
     @param name_to_match: input string
     @return service: detected service name
     """
     pattern = re.compile('.*{0}.*'.format(name_to_match), re.IGNORECASE)
-    #~ matched = []
-    #~ for service in DEFAULT_SERVICES:
-        #~ if pattern.match(service):
-            #~ matched.append(service)
-    return [ service for service in DEFAULT_SERVICES if pattern.match(service)]
+    return [ service for service in service_list if pattern.match(service)]
     #~ if len(matched) == 1:
         #~ return matched[0]
     #~ else:
@@ -87,15 +86,18 @@ something like 'p emcach 1' and it still matchs 'memcached'.
 
 
 if __name__ == "__main__":
-    args = sys.argv
-    if len(args) == 2:
-        service = detect_service(args[1])
-        count = len(service)
-        if count == 0:
-            print("No service was matched with '%s'" % args[1])
-        elif count == 1:
-            print("do stuff to %s" % service)
-        else:
-            print("to many matchs: %s" % service)
-    else:
-        print_help()
+    parser = argparse.ArgumentParser()
+    parser.parse_args()
+
+    #~ args = sys.argv
+    #~ if len(args) == 2:
+        #~ service = detect_service(args[1])
+        #~ count = len(service)
+        #~ if count == 0:
+            #~ print("No service was matched with '%s'" % args[1])
+        #~ elif count == 1:
+            #~ print("do stuff to %s" % service)
+        #~ else:
+            #~ print("to many matches: %s" % service)
+    #~ else:
+        #~ print_help()
