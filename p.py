@@ -94,11 +94,22 @@ something like 'p emcach 1' and it still matchs 'memcached'.
 def setup_parser():
     """ Setup CLI options parser """
     parser = argparse.ArgumentParser(description="Pragmatic Service Manager")
-    parser.add_argument("service")
+    parser.add_argument("service", help="text to match against service names",
+        type=str)
+    parser.add_argument("operation", type=int,
+        help="operation to apply: 0 stop, 1 start, 2 restart(default)",
+        nargs='?', default=2)
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
     args = setup_parser()
-    print(detect_service(args.service))
+    service_name = detect_service(args.service)
+    possible_states = 'stop start restart'.split()
+    if 0 <= args.operation <=2:
+        state  = possible_states[args.operation]
+        os.system('systemctl %s %s' % (state, service_name))
+        #~ print('systemctl %s %s' % (state, service_name))
+    else:
+        print('Integer out of range: 0 stop, 1 start, 2 restart(default)')
