@@ -52,7 +52,17 @@ def detect_service(name_to_match, service_list=DEFAULT_SERVICES):
     @return service: detected service name
     """
     pattern = re.compile('.*{0}.*'.format(name_to_match), re.IGNORECASE)
-    return [service for service in service_list if pattern.match(service)]
+    matched = [service for service in service_list if pattern.match(service)]
+    count = len(matched)
+    if count == 1:
+        return matched[0]
+    if count > 1:
+        print("Too many matches: %s" % ", ".join(matched))
+        sys.exit(1)
+    else:
+        print("No matches")
+        sys.exit(2)
+
 
 
 def print_help():
@@ -84,7 +94,7 @@ something like 'p emcach 1' and it still matchs 'memcached'.
 
 def setup_parser():
     """ Setup CLI options parser """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Pragmatic Service Manager")
     parser.add_argument("service")
     args = parser.parse_args()
     return args
@@ -92,4 +102,4 @@ def setup_parser():
 
 if __name__ == "__main__":
     args = setup_parser()
-    print(args.service)
+    print(detect_service(args.service))
