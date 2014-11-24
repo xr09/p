@@ -8,7 +8,7 @@ Tired of those 'sudo service postgresql restart'?
 
 How about 'sudo /etc/init.d/memcached restart'?
 
-And the new kid in town: 'systemcl restart libvirtd'
+And the new kid in town: 'systemctl restart libvirtd'
 
 Wouldn't be awesome to be able to type something like this?
 
