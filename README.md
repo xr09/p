@@ -12,7 +12,6 @@ Wouldn't be awesome to be able to type something like this?
 
     p my 1      # start
     p po 0      # stop
-    p li fr     # force reload
     p me        # restart
 
 And yes, my is mysql, po is postgres, li is lighttpd and me is memcahed.
