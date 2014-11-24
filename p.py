@@ -64,7 +64,6 @@ def detect_service(name_to_match, service_list=DEFAULT_SERVICES):
         sys.exit(2)
 
 
-
 def print_help():
     """ Print basic usage"""
     USAGE = """P (as in Pragmatic)
