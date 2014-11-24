@@ -52,16 +52,8 @@ def detect_service(name_to_match, service_list=DEFAULT_SERVICES):
     @return service: detected service name
     """
     pattern = re.compile('.*{0}.*'.format(name_to_match), re.IGNORECASE)
-    matched = [service for service in service_list if pattern.match(service)]
-    count = len(matched)
-    if count == 1:
-        return matched[0]
-    if count > 1:
-        print("Too many matches: %s" % ", ".join(matched))
-        sys.exit(1)
-    else:
-        print("No matches")
-        sys.exit(2)
+    return [service for service in service_list if pattern.match(service)]
+
 
 
 def print_help():
@@ -105,11 +97,19 @@ def setup_parser():
 
 if __name__ == "__main__":
     args = setup_parser()
-    service_name = detect_service(args.service)
+    matched = detect_service(args.service)
+    count = len(matched)
+    if count > 1:
+        print("Too many matches for '%s': %s" % (args.service, ", ".join(matched)))
+        sys.exit(1)
+    elif not count:
+        print("No matches for '%s'" % args.service)
+        sys.exit(2)
+    service_name = matched[0]
     possible_states = 'stop start restart'.split()
     if 0 <= args.operation <=2:
         state  = possible_states[args.operation]
+        # TODO: use subprocess module
         os.system('systemctl %s %s' % (state, service_name))
-        #~ print('systemctl %s %s' % (state, service_name))
     else:
         print('Integer out of range: 0 stop, 1 start, 2 restart(default)')
