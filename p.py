@@ -30,13 +30,13 @@ import re
 import argparse
 
 
-VERSION = '0.2'
+VERSION = '0.2.1'
 
 # Default service  list
 # Just in case there is no /etc/p.conf
 DEFAULT_SERVICES = "memcached ssh postgresql mysql prosody wicd hostapd \
-            udhcpd dnsmasq apache2 httpd nginx networking php5-fpm uwsgi gunicorn preload \
-            ferm libvirtd lighttpd".split()
+            udhcpd dnsmasq apache2 httpd nginx networking php5-fpm uwsgi \
+            gunicorn preload ferm libvirtd lighttpd".split()
 
 # read service groups form .p.conf
 SERVICE_GROUPS = {'web': 'nginx php5-fpm', 'db': 'postgresql memcached'}
@@ -52,11 +52,7 @@ def detect_service(name_to_match, service_list=DEFAULT_SERVICES):
     @return service: detected service name
     """
     pattern = re.compile('.*{0}.*'.format(name_to_match), re.IGNORECASE)
-    return [ service for service in service_list if pattern.match(service)]
-    #~ if len(matched) == 1:
-        #~ return matched[0]
-    #~ else:
-        #~ return None
+    return [service for service in service_list if pattern.match(service)]
 
 
 def print_help():
@@ -65,7 +61,9 @@ def print_help():
 
 version: {0}
 
-P is a simple frontend for managing init systems. No more dealing with 'service', 'systemctl' or '/etc/init.d/', just use p and take advantage of its regex support.
+P is a simple frontend for managing init systems. No more dealing with \
+'service', 'systemctl' or '/etc/init.d/', just use p and take advantage \
+of its regex support.
 
 Starting a service: (p regex 1)
     p mysq 1      # start mysql
@@ -84,20 +82,14 @@ something like 'p emcach 1' and it still matchs 'memcached'.
     print(USAGE)
 
 
+def setup_parser():
+    """ Setup CLI options parser """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("service")
+    args = parser.parse_args()
+    return args
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.parse_args()
-
-    #~ args = sys.argv
-    #~ if len(args) == 2:
-        #~ service = detect_service(args[1])
-        #~ count = len(service)
-        #~ if count == 0:
-            #~ print("No service was matched with '%s'" % args[1])
-        #~ elif count == 1:
-            #~ print("do stuff to %s" % service)
-        #~ else:
-            #~ print("to many matches: %s" % service)
-    #~ else:
-        #~ print_help()
+    args = setup_parser()
+    print(args.service)
