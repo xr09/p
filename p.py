@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2014 Manuel E. Gutierrez <mgp@nauta.cu>
+# Copyright (C) 2017 Manuel E. Gutierrez <mgp.xr09 at gmail>
 #
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -30,7 +30,7 @@ import re
 import argparse
 
 
-VERSION = '0.2.1'
+VERSION = '0.2.2'
 
 # Default service  list
 # Just in case there is no /etc/p.conf
@@ -89,7 +89,7 @@ def setup_parser():
     parser.add_argument("service", help="text to match against service names",
         type=str)
     parser.add_argument("operation", type=int,
-        help="operation to apply: 0 stop, 1 start, 2 restart(default)",
+        help="operation to apply: 0 stop, 1 start, 2 (default) restart",
         nargs='?', default=2)
     args = parser.parse_args()
     return args
@@ -112,4 +112,4 @@ if __name__ == "__main__":
         # TODO: use subprocess module
         os.system('systemctl %s %s' % (state, service_name))
     else:
-        print('Integer out of range: 0 stop, 1 start, 2 restart(default)')
+        print('Integer out of range: 0 stop, 1 start, 2 (default) restart')
